@@ -18,11 +18,9 @@ public class Water extends Terrain {
     }
 	@Override
 	public void clicked(Item selectedItem) {
-		if (selectedItem instanceof Bucket && Game.hasStamina(1)) {
+		if (selectedItem instanceof Bucket && Game.useStamina(10)) {
 			((Bucket) selectedItem).fill();
-
-            Game.expendStamina(10);
-        }
+		}
 	}
 }
 

@@ -50,8 +50,7 @@ public class Game extends BasicGameState
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException
 	{
 		//This code happens when you enter a game state for the *first time.*
-		Images.loadImages();
-		Fonts.loadFonts();
+		//(Images and fonts are loaded in Main.initStatesList)
 		gc.setShowFPS(true);
 		world = new World();
 		itemBar = new ItemBar();
@@ -96,6 +95,11 @@ public class Game extends BasicGameState
 	}
 
 	public void keyPressed(int key, char c) {
+		// the window has no title bar, so Esc is the way out
+		if (key == Input.KEY_ESCAPE) {
+			gc.exit();
+		}
+
 		if (key == Input.KEY_SPACE) {
 			world.nextDay();
 			days++;
@@ -150,7 +154,8 @@ public class Game extends BasicGameState
 		return money >= amount;
 	}
 
-	public void renderMoney(Graphics g) {
+	// Shared with the Shop screen
+	public static void renderMoney(Graphics g) {
 		int moneyX = 10;
 		int moneyY = 35;
 
@@ -175,6 +180,15 @@ public class Game extends BasicGameState
 		if (hasStamina(amount)) {
 			curStamina -= amount;
 		}
+	}
+
+	// Spends stamina only if there is enough; returns whether the action can happen.
+	public static boolean useStamina(int amount) {
+		if (!hasStamina(amount)) {
+			return false;
+		}
+		curStamina -= amount;
+		return true;
 	}
 
 	public void renderStamina(Graphics g) {
@@ -212,14 +226,14 @@ public class Game extends BasicGameState
 	}
 
 
-	public void renderDays(Graphics g) {
-		int daysX = 1600;
+	// Drawn in the top-right corner on any screen size. Shared with the Shop screen.
+	public static void renderDays(Graphics g) {
+		String text = "Days: " + days;
+		int daysX = Main.getScreenWidth() - Fonts.big.getWidth(text) - 20;
 		int daysY = 35;
 
-
-		Fonts.big.drawString(daysX + 2, daysY + 2, "Days: " + days, Color.black);
-
-		Fonts.big.drawString(daysX, daysY, "Days: " + days, Color.white);
+		Fonts.big.drawString(daysX + 2, daysY + 2, text, Color.black);
+		Fonts.big.drawString(daysX, daysY, text, Color.white);
 	}
 
 	public static int getDays() {

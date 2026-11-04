@@ -66,18 +66,4 @@ public class Corn extends Crop {
 	        focus = true;
 	    }
 	}
-
-	 @Override
-	 public void clicked(Item selectedItem) {
-	     if (isMature()) {
-	         
-	         cell.setEntity(null);
-
-	        
-	         expired = true;
-
-	        
-	         Game.gainMoney(value);
-	     }
-	 }
 }

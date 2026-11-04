@@ -42,6 +42,9 @@ public class Title extends BasicGameState {
 
     @Override
     public void keyPressed(int key, char c) {
+        if (key == Input.KEY_ESCAPE) {
+            Game.gc.exit();
+        }
         if (Character.toUpperCase(c) == 'P') {
             sbg.enterState(Main.GAME_ID);
         }

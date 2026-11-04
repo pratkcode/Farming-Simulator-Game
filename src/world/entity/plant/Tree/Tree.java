@@ -18,6 +18,7 @@ public abstract class Tree extends Plant {
 
     public Tree(int daysGrown) {
         super();
+        this.daysGrown = daysGrown;
         focus = true;
         setHealth();
     }
@@ -28,7 +29,8 @@ public abstract class Tree extends Plant {
     }
 
     protected void setHealth() {
-        curHealth = INITIAL_HEALTH + (daysGrown * 20);
+        // older trees are tougher
+        maxHealth = INITIAL_HEALTH + (daysGrown * 20);
         curHealth = maxHealth;
     }
 

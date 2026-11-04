@@ -39,7 +39,7 @@ public abstract class Crop extends Plant {
 		 
 	     if (isMature()) {
 
-	         cell.setEntity(null);
+	         cell.removeEntity();
 
 	         expired = true;
 

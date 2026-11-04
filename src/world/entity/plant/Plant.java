@@ -14,7 +14,7 @@ import world.terrain.Terrain;
 public abstract class Plant extends Entity {
 
     protected int daysGrown;
-    protected static int maturity;
+    protected int maturity; // days to grow; each plant has its own (was static, so all crops shared one value)
     protected SpriteSheet sheet;
 
     public boolean isMature() {

@@ -19,6 +19,7 @@ public class ItemBar {
     private List<Item> items;
     private int selectedIndex = -1;
     private static final int MAX_ITEMS = 9;
+    private Image cursorImage; // picture the mouse cursor currently shows (null = default)
 
     //constructor
     public ItemBar() {
@@ -77,31 +78,23 @@ public class ItemBar {
     }
 
     
+    // Shows the selected item as the mouse cursor. Only rebuilds the cursor when
+    // the item (or its picture, e.g. bucket filled) changes, not every frame.
     public void setCursor() {
-        if (!hasSelectedItem()) {
+        Image wanted = hasSelectedItem() ? getSelectedItem().getImage() : null;
+        if (wanted == cursorImage) {
+            return;
+        }
+        cursorImage = wanted;
+
+        if (wanted == null) {
             Game.gc.setDefaultMouseCursor();
-        } else {
-            try {
-            	Item selectedItem = getSelectedItem();
-                Image selectedItemImage = selectedItem.getImage().getScaledCopy(32, 32);
-                Game.gc.setMouseCursor(selectedItemImage, 16, 16);
-
-
-                int selectedIndex = items.indexOf(selectedItem);
-                int x = selectedIndex * 80; //spacing
-                int y = Game.gc.getScreenHeight() - 100; 
-
-                Game.gc.getGraphics().setColor(org.newdawn.slick.Color.white);
-                Game.gc.getGraphics().drawRect(x, y, 80, 80);
-                if (selectedItem.isExpired()) {
-                    clearSelection();
-                } else {
-                   
-                   
-                }
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
+            return;
+        }
+        try {
+            Game.gc.setMouseCursor(wanted.getScaledCopy(32, 32), 16, 16);
+        } catch (SlickException e) {
+            e.printStackTrace();
         }
     }
     

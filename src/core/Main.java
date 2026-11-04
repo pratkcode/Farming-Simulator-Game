@@ -38,11 +38,11 @@ public class Main extends StateBasedGame
 	}
 
 
+	// Slick calls this once the window exists, then calls init() on every state itself.
+	// The first state added (Title) is shown first automatically.
 	public void initStatesList(GameContainer gc) throws SlickException {
-		this.getState(TITLE_ID).init(gc, this);
-		this.enterState(TITLE_ID);
-		this.getState(GAME_ID).init(gc, this);
-
+		Images.loadImages();
+		Fonts.loadFonts();
 	}
 
 
@@ -51,13 +51,14 @@ public class Main extends StateBasedGame
 	{
 		try
 		{
-			appgc = new AppGameContainer(new Main("My First Project"));
+			// must be set before the window is created to take effect (borderless window)
 			System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
+			appgc = new AppGameContainer(new Main("Farming Simulator"));
 
 			appgc.setDisplayMode(appgc.getScreenWidth(), appgc.getScreenHeight(), false);
 			appgc.setTargetFrameRate(FRAMES_PER_SECOND);
-			appgc.start();
 			appgc.setVSync(true);
+			appgc.start(); // runs the game loop; nothing after this line runs until the game closes
 
 		}
 		catch (SlickException e)

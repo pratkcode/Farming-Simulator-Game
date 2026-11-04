@@ -94,12 +94,11 @@ public class World {
 		{
 			for(int j = 0; j < HEIGHT; j++)
 			{
+				// each cell draws its own terrain and entity, top row first,
+				// so taller sprites overlap the row above correctly
 				cells[i][j].render(g);
 			}
 		}
-		for (Entity entity : entities) {
-            entity.render(g);
-        }
 
 		Weather.render();
 	}
@@ -178,13 +177,10 @@ public class World {
 	    }
 	
 	public void cleanup() {
-	    //iterate through entities in reverse order to avoid skipping elements
-	    for (int i = entities.size() - 1; i >= 0; i--) {
-	        Entity entity = entities.get(i);
-	        if (entity.isExpired()) {
-	            entities.remove(i);
-	        }
-	    }
+	    // remove harvested/destroyed entities from every list so they stop updating
+	    entities.removeIf(Entity::isExpired);
+	    crops.removeIf(Entity::isExpired);
+	    sprinklers.removeIf(Entity::isExpired);
 	}
 	
 	public static Cell getCell(int x, int y) {

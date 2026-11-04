@@ -15,6 +15,7 @@ import world.terrain.Terrain;
 public class Rock extends Entity {
     private static final int INITIAL_HEALTH = 5;
     private static final int VALUE = 1;
+    private static final int STAMINA_COST = 5;
 
     public Rock() throws SlickException {
        
@@ -45,8 +46,7 @@ public class Rock extends Entity {
     @Override
     public void clicked(Item selectedItem) {
        
-        if (Game.hasStamina(1) && selectedItem instanceof Pick) {
-            Game.expendStamina(5);
+        if (selectedItem instanceof Pick && Game.useStamina(STAMINA_COST)) {
             curHealth--;
 
             if (curHealth <= 0) {

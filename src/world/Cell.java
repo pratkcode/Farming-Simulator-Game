@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import world.entity.BasicSprinkler;
+import world.entity.Sprinkler;
 import world.entity.Entity;
 import world.entity.plant.crop.Crop;
 import world.terrain.Terrain;
@@ -108,10 +108,12 @@ public class Cell {
 
 	public void clicked(Item selectedItem) {
 	    if (selectedItem instanceof SprinklerItem && !hasEntity()) {
-	        SprinklerItem sprinklerItem = (SprinklerItem) selectedItem;
-	        BasicSprinkler sprinkler = sprinklerItem.makeEntity();
-	        setEntity(sprinkler);
-	        selectedItem.expire();
+	        Sprinkler sprinkler = ((SprinklerItem) selectedItem).makeEntity();
+	        if (sprinkler.isValid(terrain)) {
+	            // addEntity registers it with the world so it waters each day
+	            World.addEntity(sprinkler, x, y);
+	            selectedItem.expire();
+	        }
 	    } else if (hasEntity() && entity.isFocus()) {
 	        entity.clicked(selectedItem);
 	    } else {

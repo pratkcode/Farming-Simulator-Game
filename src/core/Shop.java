@@ -54,8 +54,8 @@ public class Shop extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         shopBackground.draw(0, 0, gc.getWidth(), gc.getHeight());
 
-        renderMoney(g);
-        renderDays(g);
+        Game.renderMoney(g);
+        Game.renderDays(g);
         renderStoreItems(g);
         Game.getItemBar().render(g, gc.getScreenHeight());
     }
@@ -94,29 +94,6 @@ public class Shop extends BasicGameState {
                 }
             }
         }
-    }
-
-    private void renderMoney(Graphics g) {
-        int moneyX = 10;
-        int moneyY = 35;
-
-        Fonts.big.drawString(moneyX + 2, moneyY + 2, "$" + Game.getMoney(), Color.black);
-
-        Fonts.big.drawString(moneyX, moneyY, "$" + Game.getMoney(), Color.white);
-
-        g.setColor(new Color(255, 255, 0));
-        int scoreX = 10;
-        int scoreY = 120;
-        g.drawString("Score: " + Game.getScore(), scoreX, scoreY);
-    }
-
-    private void renderDays(Graphics g) {
-        int daysX = 1600;
-        int daysY = 35;
-
-        Fonts.big.drawString(daysX + 2, daysY + 2, "Days: " + Game.getDays(), Color.black);
-
-        Fonts.big.drawString(daysX, daysY, "Days: " + Game.getDays(), Color.white);
     }
 
     private void renderStoreItems(Graphics g) {
